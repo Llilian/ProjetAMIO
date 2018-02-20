@@ -1,6 +1,6 @@
 # ProjetAMIO
 
-##TP 1
+## TP 1
 Programmation Android
 *[X] Prise en main
 	*[X] Q1
@@ -18,7 +18,7 @@ Programmation Android
 	*[X] Q2
 	*[] Q3
 
-##TP 2
+## TP 2
 *[] Consultation d'un web service
 	*[] Q1
 	*[] Q2
@@ -30,7 +30,7 @@ Programmation Android
 	*[] Q1
 	*[] Q2
 
-##TP 3
+## TP 3
 *[] Envoi d'email par comosition de service
 *[] Menu des préférences
 	*[] Q1
