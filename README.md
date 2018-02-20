@@ -2,10 +2,10 @@
 
 ## TP 1
 Programmation Android
-*[X] Prise en main
-	*[X] Q1
-	*[X] Q2
-	*[X} Q3
++[X] Prise en main
+	+[X] Q1
+	-[X] Q2
+	+[X} Q3
 *[X] Service et tâche périodique
 	*[X] Q1
 	*[X] Q2
