@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lilian.projetamio.MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="482dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ToggleButton
+            android:id="@+id/TglBtn1"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:text="ToggleButton"
+            tools:layout_editor_absoluteX="137dp"
+            tools:layout_editor_absoluteY="408dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/LinLyt2"
+        android:layout_width="205dp"
+        android:layout_height="482dp"
+        android:layout_marginBottom="121dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LinLyt1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TV2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="31dp" />
+
+        <TextView
+            android:id="@+id/TV4"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="142dp" />
+
+        <TextView
+            android:id="@+id/TV6"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="252dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinLyt1"
+        android:layout_width="205dp"
+        android:layout_height="482dp"
+        android:layout_marginBottom="121dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/LinLyt2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TV1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="Service status :"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/TV3"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="Last result :"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="141dp" />
+
+        <TextView
+            android:id="@+id/TV5"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="Last alert :"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="252dp" />
+
+        <CheckBox
+            android:id="@+id/CheckBox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tart at boot" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
