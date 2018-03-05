@@ -5,43 +5,38 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.TimerTask;
-import java.util.Timer;
-
-public class MyService extends Service {
+import java.io.IOException;
 
 
-    int cpt;
-    Timer timer;
+public class WebService_Service extends Service {
 
+    private String url;
 
-    public MyService() {
+    public WebService_Service() {
     }
 
     public void onCreate(){
         super.onCreate();
         Log.d("Service", "Creation service");
-        timer = new Timer();
-        cpt = 0;
+        url = "http://iotlab.telecomnancy.eu/rest/data/1/temperature/last";
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
         Log.d("Service", "Démarage service");
+        GetDataIoT getData = new GetDataIoT();
+        try {
+            getData.downloadUrl(url);
+        } catch(IOException ex){
+            ex.getStackTrace();
+        }
 
-        TimerTask task = new TimerTask(){
-            public void run() {
-                Log.d("Timer", "Compteur :" + cpt);
-                cpt++;
-            }};
 
-        timer.schedule(task,0,1000);
         return START_STICKY;
     }
 
     public void onDestroy(){
         super.onDestroy();
         Log.d("Service", "Destruction du service");
-        timer.cancel();
     }
 
     @Override
@@ -49,5 +44,4 @@ public class MyService extends Service {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
 }

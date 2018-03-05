@@ -20,12 +20,26 @@
             android:id="@+id/TglBtn1"
             android:layout_width="120dp"
             android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="41dp"
+            android:layout_marginStart="41dp"
             android:checked="false"
             android:text="ToggleButton"
             tools:layout_editor_absoluteX="137dp"
             tools:layout_editor_absoluteY="408dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="46dp"
+            android:layout_marginRight="46dp"
+            android:text="Button" />
     </RelativeLayout>
 
     <LinearLayout
@@ -105,7 +119,7 @@
             android:id="@+id/CheckBox1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tart at boot" />
+            android:text="Start at boot" />
 
     </LinearLayout>
 

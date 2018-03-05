@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Log.d("Main", "Démmarage du service");
                     tV2.setText("En cours");
-                    startService(new Intent(getApplicationContext(), MyService.class));
+                    startService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
                 else // Service arrété -> Appuie pour le démarrer
                 {
                     Log.d("Main","Arret du service");
                     tV2.setText("Arrêté");
-                    stopService(new Intent(getApplicationContext(), MyService.class));
+                    stopService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
             }
         });
