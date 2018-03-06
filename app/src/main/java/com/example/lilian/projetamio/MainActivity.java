@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.health.TimerStat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,13 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.FormatFlagsConversionMismatchException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -98,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("BroadcastReceiver", "Recu");
             if(intent.getAction().equals(mBroadcastAction)){
                 tV4.setText(intent.getStringExtra("DataLight"));
-                tV6.setText(intent.getStringExtra("DataTime"));
+                tV6.setText(convertTime(intent.getLongExtra("DataTime", 0)));
             }
 
             else if(intent.getAction().equals(mBroadcastActionError))
@@ -114,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         Log.d("Main","Fin de l'activité");
+    }
+
+    private String convertTime(Long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return format.format(date);
     }
 
 }

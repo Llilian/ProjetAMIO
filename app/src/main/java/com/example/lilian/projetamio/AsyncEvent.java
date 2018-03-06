@@ -94,12 +94,12 @@ public class AsyncEvent extends AsyncTask<String,String,Data>{
         //textView.setText(result);
         /*if (Code != HttpURLConnection.HTTP_NOT_FOUND){
             Toast.makeText(context,"post",Toast.LENGTH_LONG).show();
-        }
-        Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());*/
+        }*/
+        Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
 
         Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
         broadcastIntent.putExtra("DataLight",  data.getLightValue().toString());
-        broadcastIntent.putExtra("DataTime",  data.getTimestamp().toString());
+        broadcastIntent.putExtra("DataTime",  data.getTimestamp());
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
     }
 }
