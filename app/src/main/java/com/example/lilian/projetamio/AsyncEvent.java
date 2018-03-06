@@ -19,13 +19,15 @@ import java.util.List;
  * Created by Lilian on 05/03/2018.
  */
 
-public class AsyncEvent extends AsyncTask<String,String,String>{
+public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
 
     private Context context;
     MyParser myParser = new MyParser();
     List data_list;
+    int Code = 0;
 
-    public AsyncEvent() {
+    public AsyncEvent(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -33,7 +35,6 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
         String result = null;
         List Array = new ArrayList();
         InputStream in = null;
-        int Code = 0;
 
         try {
             // Ouverture de la connexion
@@ -48,11 +49,8 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
-                Intent broadcastIntent = new Intent(MainActivity.mBroadcastActionError);
-                broadcastIntent.putExtra("Data", "value");
-                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+                return "value return";
                 //Return code au service, traitement dans celui ci
-                //publishProgress("httpcode", String.valueOf(Code));
             }
             else {
                 in = urlConnection.getInputStream();
@@ -82,13 +80,21 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
     }
 
 
-
+    //TODO Toast ne s'affiche pas 1
     protected void onProgressUpdate(String... Progress)
     {
+        if (Code != HttpURLConnection.HTTP_NOT_FOUND){
+            Toast.makeText(context,"progress",Toast.LENGTH_LONG).show();
+            Log.d("Publish","Downloaded : " );
+        }
     }
 
+    //TODO Toast ne s'affiche pas 2
     protected void onPostExecute(String result) {
         //textView.setText(result);
-        Log.d("Result post exec","Downloaded : " + result + " octets");
+        if (Code != HttpURLConnection.HTTP_NOT_FOUND){
+            Toast.makeText(context,"post",Toast.LENGTH_LONG).show();
+        }
+        Log.d("Result post exec","Downloaded : " + result);
     }
 }

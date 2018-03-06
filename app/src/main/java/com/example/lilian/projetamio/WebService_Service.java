@@ -18,7 +18,6 @@ public class WebService_Service extends Service {
     public void onCreate(){
         super.onCreate();
         Log.d("Service", "Creation service");
-        url = "http://iotlab.telecomnancy.eu/rest/data/1/temperature/last";
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -28,7 +27,7 @@ public class WebService_Service extends Service {
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
 
         try {
-            AsyncEvent async = new AsyncEvent();
+            AsyncEvent async = new AsyncEvent(getApplicationContext());
             async.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
