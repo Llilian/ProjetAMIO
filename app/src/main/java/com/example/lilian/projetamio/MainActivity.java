@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tV2;
     private TextView tV4;
+    private TextView tV6;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ToggleButton tb1 = (ToggleButton)findViewById(R.id.TglBtn1);
         tV2 = findViewById(R.id.TV2);
         tV4 = findViewById(R.id.TV4);
+        tV6 = findViewById(R.id.TV6);
         tb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -94,8 +96,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("BroadcastReceiver", "Recu");
-            if(intent.getAction().equals(mBroadcastAction))
-                tV4.setText(intent.getStringExtra("Data"));
+            if(intent.getAction().equals(mBroadcastAction)){
+                tV4.setText(intent.getStringExtra("DataLight"));
+                tV6.setText(intent.getStringExtra("DataTime"));
+            }
+
             else if(intent.getAction().equals(mBroadcastActionError))
                 Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
         }

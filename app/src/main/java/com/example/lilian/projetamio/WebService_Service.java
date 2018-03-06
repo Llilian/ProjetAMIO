@@ -22,10 +22,6 @@ public class WebService_Service extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId){
         Log.d("Service", "Démarage service");
-        Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
-        broadcastIntent.putExtra("Data", "value");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
-
         try {
             AsyncEvent async = new AsyncEvent(getApplicationContext());
             async.execute(url);

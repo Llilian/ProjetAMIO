@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Lilian on 05/03/2018.
  */
 
-public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
+public class AsyncEvent extends AsyncTask<String,String,Data>{
 
     private Context context;
     MyParser myParser = new MyParser();
@@ -31,7 +31,7 @@ public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
     }
 
     @Override
-    protected String doInBackground(String... text){
+    protected Data doInBackground(String... text){
         String result = null;
         List Array = new ArrayList();
         InputStream in = null;
@@ -49,7 +49,7 @@ public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
-                return "value return";
+                //return "value return";
                 //Return code au service, traitement dans celui ci
             }
             else {
@@ -70,7 +70,7 @@ public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
                 Data lastData = (Data) data_list.get(data_list.size()-1);
                 String lastResult = lastData.getLightValue() + " - timestamp : " + lastData.getTimestamp();
                 Log.d("Datalist", "LightValue : " + lastResult);
-                //return lastResult;
+                return lastData;
                 //publishProgress("lastResult",lastResult);
             }
         } catch (Exception e) {
@@ -90,11 +90,16 @@ public class AsyncEvent extends AsyncTask<String,HttpURLConnection,String>{
     }
 
     //TODO Toast ne s'affiche pas 2
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(Data data) {
         //textView.setText(result);
-        if (Code != HttpURLConnection.HTTP_NOT_FOUND){
+        /*if (Code != HttpURLConnection.HTTP_NOT_FOUND){
             Toast.makeText(context,"post",Toast.LENGTH_LONG).show();
         }
-        Log.d("Result post exec","Downloaded : " + result);
+        Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());*/
+
+        Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
+        broadcastIntent.putExtra("DataLight",  data.getLightValue().toString());
+        broadcastIntent.putExtra("DataTime",  data.getTimestamp().toString());
+        LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
     }
 }
