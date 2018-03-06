@@ -43,7 +43,7 @@ public class MyParser {
             return data_list;
         }
         catch (IOException e) {
-            Log.d("readJsonStream",""+e);
+            Log.d("readJsonStream", e.getMessage());
             return null;
         }finally{
             reader.close();

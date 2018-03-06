@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Lilian on 05/03/2018.
  */
 
-public class AsyncEvent extends AsyncTask {
+public class AsyncEvent extends AsyncTask<String,String,String>{
 
     private Context context;
     MyParser myParser = new MyParser();
@@ -30,33 +30,35 @@ public class AsyncEvent extends AsyncTask {
         this.dataDownloadListener = dataDownloadListener;
     }
 
-    protected String doInBackground(String... texte) {
 
-        URL urls;
+    @Override
+    protected String doInBackground(String... text){
         String result = null;
         List Array = new ArrayList();
-        String url = "http://iotlab.telecomnancy.eu/rest/data/1/light1/last";
         InputStream in = null;
         int Code = 0;
 
         try {
             // Ouverture de la connexion
-            urls = new URL(url);
-            HttpURLConnection urlConnection = (HttpURLConnection) urls.openConnection();
-
-            // Connexion à l'URL
+            URL url = new URL("http://iotlab.telecomnancy.eu/rest/data/1/light1/last");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(10000); // en milliseconds
+            urlConnection.setReadTimeout(500); // en milliseconds
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
             urlConnection.connect();
+
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
-                //publishProgress("httpcode", String.valueOf(Code));
+                publishProgress("httpcode", String.valueOf(Code));
             }
             else {
                 in = urlConnection.getInputStream();
             }
 
         } catch (MalformedURLException e1) {
-
+            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -71,20 +73,17 @@ public class AsyncEvent extends AsyncTask {
                 Log.d("Datalist", "LightValue : " + lastResult);
                 //return lastResult;
                 //publishProgress("lastResult",lastResult);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
 
 
-
-
-    protected void onProgressUpdate(String... Progress) {
+    protected void onProgressUpdate(String... Progress)
+    {
         if(Progress != null)
         {
             dataDownloadListener.dataDownloadedSuccessfully(Progress);
@@ -96,6 +95,7 @@ public class AsyncEvent extends AsyncTask {
 
     protected void onPostExecute(String result) {
         //textView.setText(result);
+        Log.d("Result post exec","Downloaded : " + result + " octets");
     }
 
     public static interface DataDownloadListener {

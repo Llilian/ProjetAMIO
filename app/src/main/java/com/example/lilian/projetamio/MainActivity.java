@@ -1,8 +1,11 @@
 package com.example.lilian.projetamio;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +16,13 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tV2;
+    private TextView tV2;
+    private TextView tV4;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
+
+    public static final String mBroadcastAction = "com.amio";
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("Main", "Création de l'activité");
 
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(mBroadcastAction);
+
         // Code ToggleButton
         ToggleButton tb1 = (ToggleButton)findViewById(R.id.TglBtn1);
-        tV2 = (TextView)findViewById(R.id.TV2);
+        tV2 = findViewById(R.id.TV2);
+        tV4 = findViewById(R.id.TV4);
         tb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -70,6 +81,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Pref", "Changement de la pref");
             }
         });
+    }
+
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("BroadcastReceiver", "Recu");
+            tV4.setText(intent.getStringExtra("Data"));
+        }
+    };
+
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+        super.onPause();
     }
 
     protected void onDestroy(){
