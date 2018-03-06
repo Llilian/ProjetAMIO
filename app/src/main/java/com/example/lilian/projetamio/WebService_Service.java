@@ -24,31 +24,11 @@ public class WebService_Service extends Service {
     public int onStartCommand(Intent intent, int flags, int startId){
         Log.d("Service", "Démarage service");
         Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
-        broadcastIntent.setAction(MainActivity.mBroadcastAction);
         broadcastIntent.putExtra("Data", "value");
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
 
         try {
             AsyncEvent async = new AsyncEvent();
-
-            async.setDataDownloadListener(new AsyncEvent.DataDownloadListener() {
-                @Override
-                public void dataDownloadedSuccessfully(String... progress) {
-                    if(progress[0].equals("lastResult")){
-                        //tV4.setText(progress[1]);
-                        Log.d("dataDownload", "Succefull");
-                    }
-                    else if(progress[0].equals("httpcode")){
-                        Toast.makeText(getApplicationContext(),"HTTP error", Toast.LENGTH_LONG).show();
-                        Log.d("dataDownload", "error");
-                    }
-                }
-
-                @Override
-                public void dataDownloadFailed() {
-
-                }
-            });
             async.execute(url);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,8 +1,11 @@
 package com.example.lilian.projetamio;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.content.Context;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,15 +24,9 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
     private Context context;
     MyParser myParser = new MyParser();
     List data_list;
-    DataDownloadListener dataDownloadListener;
 
     public AsyncEvent() {
     }
-
-    public void setDataDownloadListener(DataDownloadListener dataDownloadListener) {
-        this.dataDownloadListener = dataDownloadListener;
-    }
-
 
     @Override
     protected String doInBackground(String... text){
@@ -51,7 +48,11 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
-                publishProgress("httpcode", String.valueOf(Code));
+                Intent broadcastIntent = new Intent(MainActivity.mBroadcastActionError);
+                broadcastIntent.putExtra("Data", "value");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+                //Return code au service, traitement dans celui ci
+                //publishProgress("httpcode", String.valueOf(Code));
             }
             else {
                 in = urlConnection.getInputStream();
@@ -84,23 +85,10 @@ public class AsyncEvent extends AsyncTask<String,String,String>{
 
     protected void onProgressUpdate(String... Progress)
     {
-        if(Progress != null)
-        {
-            dataDownloadListener.dataDownloadedSuccessfully(Progress);
-        }
-        else {
-            dataDownloadListener.dataDownloadFailed();
-        }
     }
 
     protected void onPostExecute(String result) {
         //textView.setText(result);
         Log.d("Result post exec","Downloaded : " + result + " octets");
     }
-
-    public static interface DataDownloadListener {
-        void dataDownloadedSuccessfully(String... data);
-        void dataDownloadFailed();
-    }
-
 }

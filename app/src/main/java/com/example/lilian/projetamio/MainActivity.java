@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
 
-    public static final String mBroadcastAction = "com.amio";
+    public static final String mBroadcastAction = "displayValue";
+    public static final String mBroadcastActionError = "popupError";
     private IntentFilter intentFilter;
 
     @Override
@@ -92,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("BroadcastReceiver", "Recu");
-            tV4.setText(intent.getStringExtra("Data"));
+            if(intent.getAction().equals(mBroadcastAction))
+                tV4.setText(intent.getStringExtra("Data"));
+            else if(intent.getAction().equals(mBroadcastActionError))
+                Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
 
