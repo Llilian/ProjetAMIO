@@ -62,16 +62,10 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
             e1.printStackTrace();
         }
 
-
         try {
             if (in != null) {
                 data_list = myParser.readJsonStream(in);
-
-                Data lastData = (Data) data_list.get(data_list.size()-1);
-                String lastResult = lastData.getLightValue() + " - timestamp : " + lastData.getTimestamp();
-                Log.d("Datalist", "LightValue : " + lastResult);
                 return data_list;
-                //publishProgress("lastResult",lastResult);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 tVLight2.setText(intent.getStringExtra("DataLight2"));
                 tVTime2.setText(convertTime(intent.getLongExtra("DataTime2", 0)));
             }
-
             else if(intent.getAction().equals(mBroadcastActionError))
                 Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
         }
