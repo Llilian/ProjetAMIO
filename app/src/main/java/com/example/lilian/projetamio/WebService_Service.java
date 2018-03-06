@@ -24,11 +24,7 @@ public class WebService_Service extends Service {
     public int onStartCommand(Intent intent, int flags, int startId){
         Log.d("Service", "Démarage service");
         GetDataIoT getData = new GetDataIoT();
-        try {
             getData.downloadUrl(url);
-        } catch(IOException ex){
-            ex.getStackTrace();
-        }
 
 
         return START_STICKY;
