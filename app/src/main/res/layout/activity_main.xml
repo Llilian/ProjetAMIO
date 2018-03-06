@@ -8,18 +8,69 @@
     tools:layout_editor_absoluteY="81dp">
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutBottom2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="482dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayoutBottom1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">>
+
+        <CheckBox
+            android:id="@+id/CheckBox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start at boot" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/LinLyt3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayoutBottom2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LinLyt2"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTop">
+
+        <TextView
+            android:id="@+id/TVMote2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="142dp" />
+
+        <TextView
+            android:id="@+id/TVLight2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="252dp" />
+
+        <TextView
+            android:id="@+id/TVTime2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutBottom1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ToggleButton
             android:id="@+id/TglBtn1"
             android:layout_width="120dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -33,7 +84,7 @@
         <Button
             android:id="@+id/button"
             android:layout_width="120dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -44,26 +95,17 @@
 
     <LinearLayout
         android:id="@+id/LinLyt2"
-        android:layout_width="205dp"
-        android:layout_height="482dp"
-        android:layout_marginBottom="121dp"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayoutBottom2"
+        app:layout_constraintEnd_toStartOf="@+id/LinLyt3"
         app:layout_constraintStart_toEndOf="@+id/LinLyt1"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTop">
 
         <TextView
-            android:id="@+id/TV2"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="31dp" />
-
-        <TextView
-            android:id="@+id/TV4"
+            android:id="@+id/TVMote1"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:text="TextView"
@@ -71,36 +113,44 @@
             tools:layout_editor_absoluteY="142dp" />
 
         <TextView
-            android:id="@+id/TV6"
+            android:id="@+id/TVLight1"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:text="TextView"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="252dp" />
+
+        <TextView
+            android:id="@+id/TVTime1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="TextView" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinLyt1"
-        android:layout_width="205dp"
-        android:layout_height="482dp"
-        android:layout_marginBottom="121dp"
+        android:layout_width="130dp"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayoutBottom2"
         app:layout_constraintEnd_toStartOf="@+id/LinLyt2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutTop">
 
         <TextView
-            android:id="@+id/TV1"
+            android:id="@+id/TVLabelMote"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="Service status :"
-            tools:layout_editor_absoluteX="28dp"
-            tools:layout_editor_absoluteY="32dp" />
+            android:text="ID Mote :"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="31dp" />
 
         <TextView
-            android:id="@+id/TV3"
+            android:id="@+id/TVLabelLight"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:text="Last result :"
@@ -108,19 +158,46 @@
             tools:layout_editor_absoluteY="141dp" />
 
         <TextView
-            android:id="@+id/TV5"
+            android:id="@+id/TVLabelLastAlert"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:text="Last alert :"
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="252dp" />
 
-        <CheckBox
-            android:id="@+id/CheckBox1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start at boot" />
-
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutTop"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TVLabelServiceStatus"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Service status :"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="32dp" />
+
+        <TextView
+            android:id="@+id/TVServiceStatus"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="31dp" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

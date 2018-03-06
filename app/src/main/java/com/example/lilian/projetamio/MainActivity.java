@@ -25,9 +25,13 @@ import java.util.FormatFlagsConversionMismatchException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tV2;
-    private TextView tV4;
-    private TextView tV6;
+    private TextView tVServiceStatus;
+    private TextView tVMote1;
+    private TextView tVLight1;
+    private TextView tVTime1;
+    private TextView tVMote2;
+    private TextView tVLight2;
+    private TextView tVTime2;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
 
@@ -44,24 +48,30 @@ public class MainActivity extends AppCompatActivity {
         intentFilter = new IntentFilter();
         intentFilter.addAction(mBroadcastAction);
 
+        // Initialisation TextView
+        tVServiceStatus = findViewById(R.id.TVServiceStatus);
+        tVMote1 = findViewById(R.id.TVMote1);
+        tVLight1 = findViewById(R.id.TVLight1);
+        tVTime1 = findViewById(R.id.TVTime1);
+        tVMote2 = findViewById(R.id.TVMote2);
+        tVLight2 = findViewById(R.id.TVLight2);
+        tVTime2 = findViewById(R.id.TVTime2);
+
         // Code ToggleButton
         ToggleButton tb1 = (ToggleButton)findViewById(R.id.TglBtn1);
-        tV2 = findViewById(R.id.TV2);
-        tV4 = findViewById(R.id.TV4);
-        tV6 = findViewById(R.id.TV6);
         tb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) // Service en cours -> Appuie pour l'arréter
                 {
                     Log.d("Main", "Démmarage du service");
-                    tV2.setText("En cours");
+                    tVServiceStatus.setText("En cours");
                     startService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
                 else // Service arrété -> Appuie pour le démarrer
                 {
                     Log.d("Main","Arret du service");
-                    tV2.setText("Arrêté");
+                    tVServiceStatus.setText("Arrêté");
                     stopService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
             }
@@ -105,8 +115,13 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.d("BroadcastReceiver", "Recu");
             if(intent.getAction().equals(mBroadcastAction)){
-                tV4.setText(intent.getStringExtra("DataLight"));
-                tV6.setText(convertTime(intent.getLongExtra("DataTime", 0)));
+                tVMote1.setText(intent.getStringExtra("DataMote1"));
+                tVLight1.setText(intent.getStringExtra("DataLight1"));
+                tVTime1.setText(convertTime(intent.getLongExtra("DataTime1", 0)));
+
+                tVMote2.setText(intent.getStringExtra("DataMote2"));
+                tVLight2.setText(intent.getStringExtra("DataLight2"));
+                tVTime2.setText(convertTime(intent.getLongExtra("DataTime2", 0)));
             }
 
             else if(intent.getAction().equals(mBroadcastActionError))

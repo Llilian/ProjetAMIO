@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Lilian on 05/03/2018.
  */
 
-public class AsyncEvent extends AsyncTask<String,String,Data>{
+public class AsyncEvent extends AsyncTask<String,String,List>{
 
     private Context context;
     MyParser myParser = new MyParser();
@@ -31,7 +31,7 @@ public class AsyncEvent extends AsyncTask<String,String,Data>{
     }
 
     @Override
-    protected Data doInBackground(String... text){
+    protected List doInBackground(String... text){
         String result = null;
         List Array = new ArrayList();
         InputStream in = null;
@@ -70,7 +70,7 @@ public class AsyncEvent extends AsyncTask<String,String,Data>{
                 Data lastData = (Data) data_list.get(data_list.size()-1);
                 String lastResult = lastData.getLightValue() + " - timestamp : " + lastData.getTimestamp();
                 Log.d("Datalist", "LightValue : " + lastResult);
-                return lastData;
+                return data_list;
                 //publishProgress("lastResult",lastResult);
             }
         } catch (Exception e) {
@@ -90,16 +90,22 @@ public class AsyncEvent extends AsyncTask<String,String,Data>{
     }
 
     //TODO Toast ne s'affiche pas 2
-    protected void onPostExecute(Data data) {
+    protected void onPostExecute(List listData) {
         //textView.setText(result);
         /*if (Code != HttpURLConnection.HTTP_NOT_FOUND){
             Toast.makeText(context,"post",Toast.LENGTH_LONG).show();
         }*/
-        Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
 
         Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
-        broadcastIntent.putExtra("DataLight",  data.getLightValue().toString());
-        broadcastIntent.putExtra("DataTime",  data.getTimestamp());
+
+        for(int i = 0; i <= data_list.size()-1; i++)
+        {
+            Data data = (Data)listData.get(i);
+            Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
+            broadcastIntent.putExtra("DataMote"+(i+1),  data.getMote());
+            broadcastIntent.putExtra("DataLight"+(i+1),  data.getLightValue().toString());
+            broadcastIntent.putExtra("DataTime"+(i+1),  data.getTimestamp());
+        }
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
     }
 }
