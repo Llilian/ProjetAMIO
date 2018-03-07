@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.health.TimerStat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.FormatFlagsConversionMismatchException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,25 +28,26 @@ public class MainActivity extends AppCompatActivity {
     private TextView tVMote1;
     private TextView tVLight1;
     private TextView tVTime1;
+    private TextView tVLightStatus1;
     private TextView tVMote2;
     private TextView tVLight2;
     private TextView tVTime2;
-    private TextView tVGlobal;
+    private TextView tVLightStatus2;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
+    private double lastResult1 = 0;
+    private double lastResult2 = 0;
 
-    public static final String mBroadcastAction = "displayValue";
-    public static final String mBroadcastActionError = "popupError";
+    public static final String mBroadcastActivity = "displayValue";
     private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("Main", "Création de l'activité");
 
         intentFilter = new IntentFilter();
-        intentFilter.addAction(mBroadcastAction);
+        intentFilter.addAction(mBroadcastActivity);
 
         // Initialisation TextView
         tVServiceStatus = findViewById(R.id.TVServiceStatus);
@@ -61,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         tVMote2 = findViewById(R.id.TVMote2);
         tVLight2 = findViewById(R.id.TVLight2);
         tVTime2 = findViewById(R.id.TVTime2);
-        //tVGlobal = findViewById(R.id.TVGlobal);
+        tVLightStatus1 = findViewById(R.id.TVLightStatus1);
+        tVLightStatus2 = findViewById(R.id.TVLightStatus2);
 
         // Code ToggleButton
         ToggleButton tb1 = (ToggleButton)findViewById(R.id.TglBtn1);
@@ -70,13 +67,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) // Service en cours -> Appuie pour l'arréter
                 {
-                    Log.d("Main", "Démmarage du service");
                     tVServiceStatus.setText("En cours");
                     startService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
                 else // Service arrété -> Appuie pour le démarrer
                 {
-                    Log.d("Main","Arret du service");
                     tVServiceStatus.setText("Arrêté");
                     stopService(new Intent(getApplicationContext(), WebService_Service.class));
                 }
@@ -94,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("Main", "CheckBox status changed");
                 edit.putBoolean("boot",b);
                 edit.commit();
             }
@@ -106,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                Log.d("Pref", "Changement de la pref");
             }
         });
     }
@@ -119,35 +112,29 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BroadcastReceiver", "Recu");
-            if(intent.getAction().equals(mBroadcastAction)){
+            /**
+             * Mise à jour des valeurs affichées
+             */
+            if(intent.getAction().equals(mBroadcastActivity)){
                 tVMote1.setText(intent.getStringExtra("DataMote1"));
-                double light1Value = intent.getDoubleExtra("DataLight1", 0);
+                double light1Value = intent.getDoubleExtra("DataLight1", -1);
                 tVLight1.setText(String.valueOf(light1Value));
                 tVTime1.setText(convertTime(intent.getLongExtra("DataTime1", 0)));
+                if(intent.getBooleanExtra("light1",false))
+                    tVLightStatus1.setText("Allumée");
+                else
+                    tVLightStatus1.setText("Eteinte");
 
-                if(light1Value != 0 && light1Value > 250){
-                    //lumière 1 allumé
-                }
 
                 tVMote2.setText(intent.getStringExtra("DataMote2"));
-                double light2Value = intent.getDoubleExtra("DataLight2", 0);
+                double light2Value = intent.getDoubleExtra("DataLight2", -1);
                 tVLight2.setText(String.valueOf(light2Value));
                 tVTime2.setText(convertTime(intent.getLongExtra("DataTime2", 0)));
-
-                if(light2Value != 0 && light2Value > 250){
-                    //lumière 2 allumé
-                } else {
-
-                }
-
-                /*tVGlobal.setText("\t\t\tMote : " + intent.getStringExtra("DataMote1") + ""
-                        + "Date :\t" + convertTime(intent.getLongExtra("DataTime1", 0))
-                        + "Luminosité :\t" + String.valueOf(light2Value)
-                        + "\n\n");*/
+                if(intent.getBooleanExtra("light2",false))
+                    tVLightStatus2.setText("Allumée");
+                else
+                    tVLightStatus2.setText("Eteinte");
             }
-            else if(intent.getAction().equals(mBroadcastActionError))
-                Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -167,14 +154,14 @@ public class MainActivity extends AppCompatActivity {
         return format.format(date);
     }
 /*
-    public void sendNotification(String message){
+    public void sendNotification(int ID,String message){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("IoT")
                 .setContentText(message)
-                //.setSmallIcon(R.drawable."image");
+                .setSmallIcon(R.drawable.notif1)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
         NotificationManager mNotifyMgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(1,mBuilder.build());
+        mNotifyMgr.notify(ID,mBuilder.build());
     }
 
     public void sendEmail(String message,String recipient) {

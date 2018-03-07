@@ -26,7 +26,6 @@ public class MyParser {
 
     public List readJsonStream(InputStream in) throws IOException {
 
-        Log.d("readJsonStream","ok");
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
             reader.beginObject(); // On commence par l'object {data:[]}
@@ -43,7 +42,6 @@ public class MyParser {
             return data_list;
         }
         catch (IOException e) {
-            Log.d("readJsonStream", e.getMessage());
             return null;
         }finally{
             reader.close();
@@ -56,8 +54,6 @@ public class MyParser {
         String label = null;
         Double light_value = null;
         String mote = null;
-
-        Log.d("readData","ok");
 
         reader.beginObject();
         while(reader.hasNext()) {

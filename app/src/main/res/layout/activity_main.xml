@@ -7,23 +7,6 @@
     tools:context="com.example.lilian.projetamio.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <LinearLayout
-        android:id="@+id/LinLyt4"
-        android:layout_width="match_parent"
-        android:layout_height="367dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="50dp">
-
-        <TextView
-            android:id="@+id/TVGlobal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            android:lines="20"
-            tools:layout_editor_absoluteY="47dp" />
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/relativeLayoutBottom2"
         android:layout_width="match_parent"
@@ -57,7 +40,6 @@
             android:id="@+id/TVMote2"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="142dp" />
 
@@ -65,7 +47,6 @@
             android:id="@+id/TVLight2"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="252dp" />
 
@@ -73,7 +54,12 @@
             android:id="@+id/TVTime2"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView" />
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="252dp" />
+        <TextView
+            android:id="@+id/TVLightStatus1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -125,7 +111,6 @@
             android:id="@+id/TVMote1"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="142dp" />
 
@@ -133,7 +118,6 @@
             android:id="@+id/TVLight1"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView"
             tools:layout_editor_absoluteX="206dp"
             tools:layout_editor_absoluteY="252dp" />
 
@@ -141,7 +125,13 @@
             android:id="@+id/TVTime1"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="TextView" />
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="252dp"/>
+
+        <TextView
+            android:id="@+id/TVLightStatus2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -170,7 +160,7 @@
             android:id="@+id/TVLabelLight"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="Last result :"
+            android:text="Valeur de luminosité :"
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="141dp" />
 
@@ -178,7 +168,15 @@
             android:id="@+id/TVLabelLastAlert"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:text="Last alert :"
+            android:text="Date :"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="252dp" />
+
+        <TextView
+            android:id="@+id/TVLabelLightStatus"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="Etat de la lampe :"
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="252dp" />
 

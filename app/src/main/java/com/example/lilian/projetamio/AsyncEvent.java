@@ -37,8 +37,6 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
         InputStream in = null;
 
         try {
-            // Ouverture de la connexion
-            Log.d("Async","Début : " );
             URL url = new URL("http://iotlab.telecomnancy.eu/rest/data/1/light1/last");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(10000); // en milliseconds
@@ -47,12 +45,10 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
             urlConnection.setDoInput(true);
 
             urlConnection.connect();
-            Log.d("Async","Downloaded : " );
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
-                //return "value return";
-                //Return code au service, traitement dans celui ci
+                return null;
             }
             else {
                 in = urlConnection.getInputStream();
@@ -75,34 +71,25 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
         return null;
     }
 
-
-    //TODO Toast ne s'affiche pas 1
     protected void onProgressUpdate(String... Progress)
     {
-        if (Code != HttpURLConnection.HTTP_NOT_FOUND){
-            Toast.makeText(context,"progress",Toast.LENGTH_LONG).show();
-            Log.d("Publish","Downloaded : " );
-        }
+
     }
 
-    //TODO Toast ne s'affiche pas 2
-    protected void onPostExecute(List listData) {
-        //textView.setText(result);
-        /*if (Code != HttpURLConnection.HTTP_NOT_FOUND){
-            Toast.makeText(context,"post",Toast.LENGTH_LONG).show();
-        }*/
 
-        Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
+    protected void onPostExecute(List listData) {
+
+        Intent broadcastIntentService = new Intent(WebService_Service.mBroadcastService);
 
         for(int i = 0; i <= listData.size()-1; i++)
         {
             Data data = (Data)listData.get(i);
             Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
-            broadcastIntent.putExtra("DataMote"+(i+1),  data.getMote());
-            broadcastIntent.putExtra("DataLight"+(i+1),  data.getLightValue());
-            broadcastIntent.putExtra("DataTime"+(i+1),  data.getTimestamp());
+            broadcastIntentService.putExtra("DataMote"+(i+1),  data.getMote());
+            broadcastIntentService.putExtra("DataLight"+(i+1),  data.getLightValue());
+            broadcastIntentService.putExtra("DataTime"+(i+1),  data.getTimestamp());
         }
-        LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
 
+        LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntentService);
     }
 }
