@@ -94,7 +94,7 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
 
         Intent broadcastIntent = new Intent(MainActivity.mBroadcastAction);
 
-        for(int i = 0; i <= data_list.size()-1; i++)
+        for(int i = 0; i <= listData.size()-1; i++)
         {
             Data data = (Data)listData.get(i);
             Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
@@ -103,5 +103,6 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
             broadcastIntent.putExtra("DataTime"+(i+1),  data.getTimestamp());
         }
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
+
     }
 }

@@ -7,13 +7,30 @@
     tools:context="com.example.lilian.projetamio.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <LinearLayout
+        android:id="@+id/LinLyt4"
+        android:layout_width="match_parent"
+        android:layout_height="367dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="50dp">
+
+        <TextView
+            android:id="@+id/TVGlobal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical"
+            android:lines="20"
+            tools:layout_editor_absoluteY="47dp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/relativeLayoutBottom2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayoutBottom1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">>
+        app:layout_constraintStart_toStartOf="parent">
 
         <CheckBox
             android:id="@+id/CheckBox1"

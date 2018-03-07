@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tVMote2;
     private TextView tVLight2;
     private TextView tVTime2;
+    private TextView tVGlobal;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         tVMote2 = findViewById(R.id.TVMote2);
         tVLight2 = findViewById(R.id.TVLight2);
         tVTime2 = findViewById(R.id.TVTime2);
+        //tVGlobal = findViewById(R.id.TVGlobal);
 
         // Code ToggleButton
         ToggleButton tb1 = (ToggleButton)findViewById(R.id.TglBtn1);
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 tVTime1.setText(convertTime(intent.getLongExtra("DataTime1", 0)));
 
                 if(light1Value != 0 && light1Value > 250){
-                    //lumière allumé
+                    //lumière 1 allumé
                 }
 
                 tVMote2.setText(intent.getStringExtra("DataMote2"));
@@ -134,10 +136,15 @@ public class MainActivity extends AppCompatActivity {
                 tVTime2.setText(convertTime(intent.getLongExtra("DataTime2", 0)));
 
                 if(light2Value != 0 && light2Value > 250){
-                    //lumière allumé
+                    //lumière 2 allumé
                 } else {
 
                 }
+
+                /*tVGlobal.setText("\t\t\tMote : " + intent.getStringExtra("DataMote1") + ""
+                        + "Date :\t" + convertTime(intent.getLongExtra("DataTime1", 0))
+                        + "Luminosité :\t" + String.valueOf(light2Value)
+                        + "\n\n");*/
             }
             else if(intent.getAction().equals(mBroadcastActionError))
                 Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
