@@ -8,7 +8,7 @@ public class MyBootBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent startService = new Intent(context, MyService.class);
+        Intent startService = new Intent(context, WebService_Service.class);
         context.startService(startService);
         throw new UnsupportedOperationException("Not yet implemented");
     }

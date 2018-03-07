@@ -1,11 +1,15 @@
 package com.example.lilian.projetamio;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.health.TimerStat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -116,12 +120,24 @@ public class MainActivity extends AppCompatActivity {
             Log.d("BroadcastReceiver", "Recu");
             if(intent.getAction().equals(mBroadcastAction)){
                 tVMote1.setText(intent.getStringExtra("DataMote1"));
-                tVLight1.setText(intent.getStringExtra("DataLight1"));
+                double light1Value = intent.getDoubleExtra("DataLight1", 0);
+                tVLight1.setText(String.valueOf(light1Value));
                 tVTime1.setText(convertTime(intent.getLongExtra("DataTime1", 0)));
 
+                if(light1Value != 0 && light1Value > 250){
+                    //lumière allumé
+                }
+
                 tVMote2.setText(intent.getStringExtra("DataMote2"));
-                tVLight2.setText(intent.getStringExtra("DataLight2"));
+                double light2Value = intent.getDoubleExtra("DataLight2", 0);
+                tVLight2.setText(String.valueOf(light2Value));
                 tVTime2.setText(convertTime(intent.getLongExtra("DataTime2", 0)));
+
+                if(light2Value != 0 && light2Value > 250){
+                    //lumière allumé
+                } else {
+
+                }
             }
             else if(intent.getAction().equals(mBroadcastActionError))
                 Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
@@ -143,5 +159,25 @@ public class MainActivity extends AppCompatActivity {
         Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return format.format(date);
     }
+/*
+    public void sendNotification(String message){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle("IoT")
+                .setContentText(message)
+                //.setSmallIcon(R.drawable."image");
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+        NotificationManager mNotifyMgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(1,mBuilder.build());
+    }
 
+    public void sendEmail(String message,String recipient) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT,"Subject of email");
+        intent.putExtra(Intent.EXTRA_TEXT, "Body of email");
+        intent.setData(Uri.parse("mailto:default@recipient.com"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+*/
 }

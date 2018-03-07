@@ -32,6 +32,7 @@ public class WebService_Service extends Service {
                 Log.d("Timer", "Lancement" );
                 try {
                     AsyncEvent async = new AsyncEvent(getApplicationContext());
+                    Log.d("Timer", "sync" );
                     async.execute();
                 } catch (Exception e) {
                     e.printStackTrace();

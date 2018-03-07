@@ -38,14 +38,16 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
 
         try {
             // Ouverture de la connexion
+            Log.d("Async","Début : " );
             URL url = new URL("http://iotlab.telecomnancy.eu/rest/data/1/light1/last");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(10000); // en milliseconds
             urlConnection.setReadTimeout(500); // en milliseconds
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
-            urlConnection.connect();
 
+            urlConnection.connect();
+            Log.d("Async","Downloaded : " );
             Code = urlConnection.getResponseCode();
 
             if (Code != HttpURLConnection.HTTP_OK) {
@@ -97,7 +99,7 @@ public class AsyncEvent extends AsyncTask<String,String,List>{
             Data data = (Data)listData.get(i);
             Log.d("Resultat post exec","Mote : " + data.getMote() + " time : " + data.getTimestamp() + " light : " + data.getLightValue() + " label : " + data.getLabel());
             broadcastIntent.putExtra("DataMote"+(i+1),  data.getMote());
-            broadcastIntent.putExtra("DataLight"+(i+1),  data.getLightValue().toString());
+            broadcastIntent.putExtra("DataLight"+(i+1),  data.getLightValue());
             broadcastIntent.putExtra("DataTime"+(i+1),  data.getTimestamp());
         }
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
